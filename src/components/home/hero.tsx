@@ -1,0 +1,187 @@
+"use client";
+
+import * as React from "react";
+import Link from "next/link";
+import { ArrowUpRight, Play, Sparkles } from "lucide-react";
+import { gsap, SplitText, EASE } from "@/lib/gsap";
+import { useAppReady, usePrefersReducedMotion } from "@/hooks/use-app";
+import { Ambient } from "@/components/three/ambient";
+import { MediaArt } from "@/components/shared/media";
+import { Magnetic } from "@/components/motion/magnetic";
+import { TiltCard } from "@/components/motion/tilt-card";
+import { Button } from "@/components/ui/button";
+import { LogoMark } from "@/components/shared/logo";
+import { heroHighlights, site } from "@/lib/data";
+
+export function Hero() {
+  const ready = useAppReady();
+  const reduced = usePrefersReducedMotion();
+  const headlineRef = React.useRef<HTMLHeadingElement>(null);
+  const scopeRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!ready || reduced || !headlineRef.current) return;
+    const ctx = gsap.context(() => {
+      const split = new SplitText(headlineRef.current, {
+        type: "lines,chars",
+        linesClass: "overflow-hidden",
+      });
+      gsap.set(headlineRef.current, { autoAlpha: 1 });
+      const tl = gsap.timeline();
+      tl.from(split.chars, {
+        yPercent: 120,
+        opacity: 0,
+        rotateX: -55,
+        stagger: 0.022,
+        duration: 1.1,
+        ease: EASE.expo,
+      });
+      tl.from(
+        "[data-hero-fade]",
+        { y: 30, opacity: 0, duration: 0.9, stagger: 0.12, ease: EASE.expo },
+        "-=0.7"
+      );
+      return () => split.revert();
+    }, scopeRef);
+    return () => ctx.revert();
+  }, [ready, reduced]);
+
+  return (
+    <section
+      ref={scopeRef}
+      className="relative flex min-h-svh flex-col justify-center overflow-hidden pb-12 pt-32"
+    >
+      {/* Backgrounds */}
+      <MediaArt tone="electric" seed="hero" intensity={0.8} />
+      <Ambient variant="hero" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" aria-hidden />
+
+      <div className="container-fluid relative z-10 grid items-center gap-12 lg:grid-cols-12">
+        {/* Left — copy */}
+        <div className="lg:col-span-7">
+          <div
+            data-hero-fade
+            className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-fog backdrop-blur-xl"
+            style={reduced ? undefined : { opacity: 0 }}
+          >
+            <Sparkles className="size-3.5 text-volt" />
+            Port Harcourt&apos;s #1 Fitness Destination
+          </div>
+
+          <h1
+            ref={headlineRef}
+            className="font-display text-[clamp(3.4rem,11vw,10rem)] uppercase leading-[0.85] text-white [perspective:900px]"
+            style={reduced ? undefined : { visibility: "hidden" }}
+          >
+            Train like
+            <br />
+            <span className="text-gradient">it matters</span>
+          </h1>
+
+          <p
+            data-hero-fade
+            className="mt-7 max-w-xl text-body-lg text-fog"
+            style={reduced ? undefined : { opacity: 0 }}
+          >
+            World-class equipment, elite coaching and luxury wellness — under one roof.
+            This is where total transformation begins.
+          </p>
+
+          <div
+            data-hero-fade
+            className="mt-9 flex flex-wrap items-center gap-3"
+            style={reduced ? undefined : { opacity: 0 }}
+          >
+            <Magnetic>
+              <Button asChild size="lg" variant="primary" className="btn-glow">
+                <Link href="/membership">
+                  Start Your Journey <ArrowUpRight className="size-5" />
+                </Link>
+              </Button>
+            </Magnetic>
+            <Button asChild size="lg" variant="glass">
+              <Link href="/about">
+                <Play className="size-4" /> Take a Tour
+              </Link>
+            </Button>
+          </div>
+
+          {/* Stat highlights */}
+          <dl
+            data-hero-fade
+            className="mt-14 grid max-w-xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
+            style={reduced ? undefined : { opacity: 0 }}
+          >
+            {heroHighlights.map((h) => (
+              <div key={h.label}>
+                <dt className="font-display text-4xl text-white">{h.value}</dt>
+                <dd className="mt-1 text-xs uppercase tracking-wider text-smoke">{h.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* Right — floating membership card */}
+        <div
+          data-hero-fade
+          className="hidden justify-self-end lg:col-span-5 lg:block"
+          style={reduced ? undefined : { opacity: 0 }}
+        >
+          <MembershipCard />
+        </div>
+      </div>
+
+      {/* Scroll cue */}
+      <div className="container-fluid relative z-10 mt-12 hidden items-center gap-3 text-xs uppercase tracking-[0.3em] text-smoke md:flex">
+        <span className="relative flex h-9 w-5 justify-center rounded-full border border-white/20 pt-1.5">
+          <span className="h-2 w-0.5 animate-pulse rounded-full bg-volt" />
+        </span>
+        Scroll to explore
+      </div>
+    </section>
+  );
+}
+
+function MembershipCard() {
+  return (
+    <TiltCard max={14} className="w-[22rem] animate-float">
+      <div className="relative overflow-hidden rounded-[1.75rem] border border-white/15 bg-charcoal-800/70 p-7 shadow-card backdrop-blur-2xl">
+        <MediaArt tone="volt" seed="member-card" pattern="mesh" intensity={0.9} />
+        <div className="relative z-10" style={{ transform: "translateZ(40px)" }}>
+          <div className="flex items-center justify-between">
+            <LogoMark className="size-10" />
+            <span className="rounded-full border border-volt/40 bg-volt/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-widest text-volt">
+              VIP Access
+            </span>
+          </div>
+
+          <div className="mt-12">
+            <p className="text-xs uppercase tracking-[0.3em] text-smoke">Member</p>
+            <p className="mt-1 font-display text-3xl tracking-wide text-white">Charlie&apos;s Elite</p>
+          </div>
+
+          {/* chip */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="h-8 w-11 rounded-md bg-gradient-to-br from-volt to-electric opacity-90" />
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
+
+          <div className="mt-6 flex items-end justify-between">
+            <div>
+              <p className="text-[0.6rem] uppercase tracking-widest text-smoke">Member No.</p>
+              <p className="font-sans text-sm tracking-widest text-white">CTF · 000 · 001</p>
+            </div>
+            <div className="text-right">
+              <p className="text-[0.6rem] uppercase tracking-widest text-smoke">Valid Thru</p>
+              <p className="font-sans text-sm tracking-widest text-white">∞</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* glow */}
+      <div className="absolute -inset-6 -z-10 rounded-full bg-volt/20 blur-3xl" aria-hidden />
+    </TiltCard>
+  );
+}
