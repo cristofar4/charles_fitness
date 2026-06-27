@@ -16,8 +16,8 @@ export function LogoMark({
     <svg viewBox="0 0 64 64" className={className} fill="none" aria-hidden role="img">
       <defs>
         <linearGradient id="ctf-ring" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#00B2FF" />
-          <stop offset="1" stopColor="#CCFF00" />
+          <stop stopColor="#FF6B35" />
+          <stop offset="1" stopColor="#F6B23E" />
         </linearGradient>
       </defs>
       {/* outer kinetic ring (open arc) */}
@@ -40,7 +40,7 @@ export function LogoMark({
         fill="none"
       />
       {/* energy bolt */}
-      <path d="M33 24l-6 9h5l-3 8 9-11h-5l3-6z" fill="#CCFF00" />
+      <path d="M33 24l-6 9h5l-3 8 9-11h-5l3-6z" fill="#F6B23E" />
     </svg>
   );
 }

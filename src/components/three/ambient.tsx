@@ -37,7 +37,7 @@ export function Ambient({
   return (
     <div ref={ref} className={cn("absolute inset-0", className)} aria-hidden>
       {/* Always-present branded glow (and the reduced-motion fallback). */}
-      <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_30%,rgba(0,178,255,0.18),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_30%,rgba(255,107,53,0.18),transparent_70%)]" />
       {!reduced && visible && <Scene variant={variant} />}
     </div>
   );

@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
-import { Magnetic } from "@/components/motion/magnetic";
 import { Button } from "@/components/ui/button";
 import { navLinks, site } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 const primary = navLinks.filter((l) =>
-  ["/about", "/membership", "/programs", "/personal-training", "/pricing"].includes(l.href)
+  ["/", "/about", "/membership", "/programs", "/personal-training", "/pricing", "/contact"].includes(
+    l.href
+  )
 );
 
 export function Navbar() {
@@ -52,7 +53,7 @@ export function Navbar() {
             <Logo />
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-0.5 lg:flex">
             {primary.map((l) => {
               const active = pathname === l.href;
               return (
@@ -60,7 +61,7 @@ export function Navbar() {
                   key={l.href}
                   href={l.href}
                   className={cn(
-                    "relative rounded-full px-4 py-2 font-sans text-sm font-medium transition-colors",
+                    "relative rounded-full px-3.5 py-2 font-sans text-sm font-medium transition-colors",
                     active ? "text-white" : "text-smoke hover:text-white"
                   )}
                 >
@@ -78,18 +79,15 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2.5">
-            <Magnetic className="hidden sm:inline-flex">
-              <Button asChild size="sm" variant="primary" className="btn-glow">
-                <Link href="/membership">
-                  Join Now <ArrowUpRight className="size-4" />
-                </Link>
-              </Button>
-            </Magnetic>
+            <Button asChild size="sm" variant="primary" className="hidden sm:inline-flex">
+              <Link href="/membership">
+                Join Now <ArrowUpRight className="size-4" />
+              </Link>
+            </Button>
             <button
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              data-cursor="hover"
-              className="grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-white transition-colors hover:border-electric/50 hover:bg-electric/10"
+              className="grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-white transition-colors hover:border-electric/50 hover:bg-electric/10 lg:hidden"
             >
               <Menu className="size-5" />
             </button>

@@ -25,15 +25,17 @@ const config: Config = {
         },
         smoke: "#8A8A93",
         fog: "#C9C9D1",
+        // NOTE: token names kept for stability; values are the warm luxury palette.
+        // "electric" = ember/flame orange · "volt" = champagne gold.
         electric: {
-          DEFAULT: "#00B2FF",
-          deep: "#0077E6",
-          soft: "#5CCBFF",
+          DEFAULT: "#FF6B35",
+          deep: "#E0481C",
+          soft: "#FF9466",
         },
         volt: {
-          DEFAULT: "#CCFF00",
-          deep: "#A6D400",
-          soft: "#E0FF66",
+          DEFAULT: "#F6B23E",
+          deep: "#D2942A",
+          soft: "#FFD37A",
         },
         danger: "#FF4D4D",
         // shadcn semantic tokens (mapped to the brand)
@@ -89,15 +91,15 @@ const config: Config = {
         "8xl": "1440px",
       },
       backgroundImage: {
-        "energy": "linear-gradient(120deg, #00B2FF, #CCFF00)",
-        "energy-soft": "linear-gradient(120deg, rgba(0,178,255,.18), rgba(204,255,0,.18))",
-        "aurora": "radial-gradient(60% 60% at 50% 40%, rgba(0,178,255,.30), transparent 70%)",
+        "energy": "linear-gradient(115deg, #FFC24B 0%, #FF6B35 55%, #E0481C 100%)",
+        "energy-soft": "linear-gradient(120deg, rgba(255,107,53,.18), rgba(246,178,62,.18))",
+        "aurora": "radial-gradient(60% 60% at 50% 40%, rgba(255,107,53,.28), transparent 70%)",
         "sheen": "linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.015))",
         "grid-fade": "linear-gradient(to bottom, transparent, #050506 80%)",
       },
       boxShadow: {
-        "glow-blue": "0 0 50px -12px rgba(0,178,255,.65)",
-        "glow-volt": "0 0 50px -12px rgba(204,255,0,.55)",
+        "glow-blue": "0 0 50px -12px rgba(255,107,53,.6)",
+        "glow-volt": "0 0 50px -12px rgba(246,178,62,.5)",
         "card": "0 24px 60px -24px rgba(0,0,0,.8)",
       },
       keyframes: {

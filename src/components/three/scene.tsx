@@ -35,7 +35,7 @@ function ParticleField({ count = 1400 }: { count?: number }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.035}
-        color="#00B2FF"
+        color="#FFB270"
         transparent
         opacity={0.7}
         sizeAttenuation
@@ -111,20 +111,20 @@ export default function Scene({ variant = "hero" }: { variant?: "hero" | "subtle
     >
       <fog attach="fog" args={["#050506", 9, 22]} />
       <ambientLight intensity={0.4} />
-      <pointLight position={[6, 5, 6]} intensity={60} color="#00B2FF" />
-      <pointLight position={[-7, -4, 2]} intensity={45} color="#CCFF00" />
-      <pointLight position={[0, 6, -6]} intensity={25} color="#A855F7" />
+      <pointLight position={[6, 5, 6]} intensity={60} color="#FF6B35" />
+      <pointLight position={[-7, -4, 2]} intensity={45} color="#F6B23E" />
+      <pointLight position={[0, 6, -6]} intensity={25} color="#FF9466" />
 
       <Rig intensity={subtle ? 0.25 : 0.6}>
         <ParticleField count={subtle ? 900 : 1500} />
         {!subtle && (
           <>
-            <Blob position={[-3.4, 1.3, -1]} color="#00B2FF" scale={1.25} speed={1.1} />
-            <Blob position={[3.6, -1.1, -0.5]} color="#CCFF00" scale={0.9} speed={1.5} />
-            <Blob position={[1.5, 2.2, -3]} color="#A855F7" scale={0.6} speed={1.8} />
+            <Blob position={[-3.4, 1.3, -1]} color="#FF6B35" scale={1.25} speed={1.1} />
+            <Blob position={[3.6, -1.1, -0.5]} color="#F6B23E" scale={0.9} speed={1.5} />
+            <Blob position={[1.5, 2.2, -3]} color="#FF9466" scale={0.6} speed={1.8} />
           </>
         )}
-        {subtle && <Blob position={[3.2, -0.6, -1]} color="#00B2FF" scale={0.8} speed={1.2} />}
+        {subtle && <Blob position={[3.2, -0.6, -1]} color="#FF6B35" scale={0.8} speed={1.2} />}
       </Rig>
     </Canvas>
   );

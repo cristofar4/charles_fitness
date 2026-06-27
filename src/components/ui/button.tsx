@@ -4,19 +4,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-semibold tracking-tight transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric focus-visible:ring-offset-2 focus-visible:ring-offset-ink disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-[1.1em] [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-semibold tracking-tight transition-[transform,background-color,border-color,color] duration-200 ease-out hover:scale-[1.03] active:scale-[0.97] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric focus-visible:ring-offset-2 focus-visible:ring-offset-ink disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-[1.1em] [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        primary:
-          "bg-volt text-ink hover:bg-volt-soft shadow-[0_0_0_0_rgba(204,255,0,0)] hover:shadow-glow-volt",
-        electric:
-          "bg-electric text-ink hover:bg-electric-soft hover:shadow-glow-blue",
+        primary: "bg-volt text-ink hover:bg-volt-soft",
+        electric: "bg-electric text-ink hover:bg-electric-soft",
         outline:
           "border border-white/20 bg-white/[0.02] text-white hover:border-electric hover:bg-electric/10 hover:text-white",
         ghost: "text-fog hover:bg-white/5 hover:text-white",
-        glass:
-          "glass text-white hover:border-white/25 hover:bg-white/[0.08]",
+        glass: "glass text-white hover:border-white/25 hover:bg-white/[0.08]",
         white: "bg-white text-ink hover:bg-fog",
       },
       size: {

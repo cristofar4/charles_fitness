@@ -6,7 +6,7 @@ import type { Tone } from "./data";
  * renders its bespoke cinematic generative art — looking fully intentional with
  * zero external media. This keeps the experience flawless in restricted networks.
  */
-export const SHOW_PHOTOS = false;
+export const SHOW_PHOTOS = true;
 
 export type ToneConfig = {
   from: string;
@@ -18,8 +18,9 @@ export type ToneConfig = {
 };
 
 export const toneMap: Record<Tone, ToneConfig> = {
-  electric: { from: "#062338", to: "#0A0A0C", glow: "#00B2FF", accent: "#00B2FF", ink: "#5CCBFF" },
-  volt: { from: "#1f2a05", to: "#0A0A0C", glow: "#CCFF00", accent: "#CCFF00", ink: "#E0FF66" },
+  // brand accents — ember (flame orange) + gold (champagne)
+  electric: { from: "#2a1206", to: "#0A0A0C", glow: "#FF6B35", accent: "#FF7A45", ink: "#FF9466" },
+  volt: { from: "#2a2008", to: "#0A0A0C", glow: "#F6B23E", accent: "#F6B23E", ink: "#FFD37A" },
   aqua: { from: "#04263a", to: "#070d12", glow: "#22D3EE", accent: "#22D3EE", ink: "#7DE9F5" },
   ember: { from: "#3a1505", to: "#0c0705", glow: "#FF8A3D", accent: "#FF8A3D", ink: "#FFB680" },
   violet: { from: "#26083a", to: "#0a0610", glow: "#A855F7", accent: "#A855F7", ink: "#C99DF7" },

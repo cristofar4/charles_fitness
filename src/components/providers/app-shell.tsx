@@ -6,7 +6,6 @@ import { SmoothScroll } from "./smooth-scroll";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Preloader } from "@/components/layout/preloader";
-import { CustomCursor } from "@/components/motion/custom-cursor";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { ScrollTrigger } from "@/lib/gsap";
 
@@ -26,7 +25,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <SmoothScroll>
       <Preloader />
       <ScrollProgress />
-      <CustomCursor />
       <RouteRefresh />
       <a
         href="#main"

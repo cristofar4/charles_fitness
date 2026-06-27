@@ -13,12 +13,14 @@ import { TiltCard } from "@/components/motion/tilt-card";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/shared/logo";
 import { heroHighlights } from "@/lib/data";
+import { cn } from "@/lib/utils";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
   const ready = useAppReady();
   const reduced = usePrefersReducedMotion();
+  const [videoOk, setVideoOk] = React.useState(false);
   const headlineRef = React.useRef<HTMLHeadingElement>(null);
   const scopeRef = React.useRef<HTMLDivElement>(null);
 
@@ -56,11 +58,37 @@ export function Hero() {
       ref={scopeRef}
       className="relative flex min-h-svh flex-col justify-center overflow-hidden pb-12 pt-32"
     >
-      {/* Backgrounds */}
+      {/* Backgrounds — generative art base, 3D fallback, then the gym video on top */}
       <MediaArt tone="electric" seed="hero" intensity={0.8} />
-      <Ambient variant="hero" />
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink" aria-hidden />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" aria-hidden />
+      {!videoOk && <Ambient variant="hero" />}
+      {!reduced && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop"
+          onCanPlay={() => setVideoOk(true)}
+          onError={() => setVideoOk(false)}
+          className={cn(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-1000",
+            videoOk ? "opacity-60" : "opacity-0"
+          )}
+          aria-hidden
+        >
+          <source
+            src="https://assets.mixkit.co/videos/preview/mixkit-people-exercising-in-a-gym-23401-large.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="https://assets.mixkit.co/videos/preview/mixkit-man-exercising-in-a-gym-with-dumbbells-30349-large.mp4"
+            type="video/mp4"
+          />
+        </video>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/30 to-ink" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/30 to-transparent" aria-hidden />
 
       <div className="container-fluid relative z-10 grid items-center gap-12 lg:grid-cols-12">
         {/* Left — copy */}
@@ -123,14 +151,6 @@ export function Hero() {
         >
           <MembershipCard />
         </motion.div>
-      </div>
-
-      {/* Scroll cue */}
-      <div className="container-fluid relative z-10 mt-12 hidden items-center gap-3 text-xs uppercase tracking-[0.3em] text-smoke md:flex">
-        <span className="relative flex h-9 w-5 justify-center rounded-full border border-white/20 pt-1.5">
-          <span className="h-2 w-0.5 animate-pulse rounded-full bg-volt" />
-        </span>
-        Scroll to explore
       </div>
     </section>
   );
