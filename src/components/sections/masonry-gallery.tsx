@@ -29,6 +29,8 @@ export function MasonryGallery() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+    // `go` is stable for a given filter; changing the filter resets `active` to null.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, items.length]);
 
   return (

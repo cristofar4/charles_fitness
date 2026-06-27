@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { gsap, ScrollTrigger, SplitText, EASE } from "@/lib/gsap";
+import { gsap, SplitText, EASE } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect, usePrefersReducedMotion } from "@/hooks/use-app";
 import { cn } from "@/lib/utils";
 

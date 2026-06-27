@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/hooks/use-app";
 import { MediaArt } from "@/components/shared/media";
 import { whyChooseUs } from "@/lib/data";

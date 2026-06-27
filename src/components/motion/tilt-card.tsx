@@ -25,6 +25,10 @@ export function TiltCard({
   const rx = useSpring(useTransform(py, [0, 1], [max, -max]), { stiffness: 200, damping: 20 });
   const ry = useSpring(useTransform(px, [0, 1], [-max, max]), { stiffness: 200, damping: 20 });
   const glareX = useTransform(px, [0, 1], ["0%", "100%"]);
+  const glareBg = useTransform(
+    glareX,
+    (gx) => `radial-gradient(220px circle at ${gx} 0%, rgba(255,255,255,0.25), transparent 60%)`
+  );
 
   function onMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!hasPointer || !ref.current) return;
@@ -50,12 +54,7 @@ export function TiltCard({
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] mix-blend-overlay"
-          style={{
-            background: useTransform(
-              glareX,
-              (gx) => `radial-gradient(220px circle at ${gx} 0%, rgba(255,255,255,0.25), transparent 60%)`
-            ),
-          }}
+          style={{ background: glareBg }}
         />
       )}
     </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect, usePrefersReducedMotion } from "@/hooks/use-app";
 import { cn } from "@/lib/utils";
 
