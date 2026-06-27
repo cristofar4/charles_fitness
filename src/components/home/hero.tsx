@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowUpRight, Play, Sparkles } from "lucide-react";
 import { gsap, SplitText, EASE } from "@/lib/gsap";
 import { useAppReady, usePrefersReducedMotion } from "@/hooks/use-app";
@@ -11,7 +12,9 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/shared/logo";
-import { heroHighlights, site } from "@/lib/data";
+import { heroHighlights } from "@/lib/data";
+
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
   const ready = useAppReady();
@@ -27,8 +30,7 @@ export function Hero() {
         linesClass: "overflow-hidden",
       });
       gsap.set(headlineRef.current, { autoAlpha: 1 });
-      const tl = gsap.timeline();
-      tl.from(split.chars, {
+      gsap.from(split.chars, {
         yPercent: 120,
         opacity: 0,
         rotateX: -55,
@@ -36,15 +38,18 @@ export function Hero() {
         duration: 1.1,
         ease: EASE.expo,
       });
-      tl.from(
-        "[data-hero-fade]",
-        { y: 30, opacity: 0, duration: 0.9, stagger: 0.12, ease: EASE.expo },
-        "-=0.7"
-      );
       return () => split.revert();
     }, scopeRef);
     return () => ctx.revert();
   }, [ready, reduced]);
+
+  // Declarative fade-rise for the supporting content, gated on the curtain lift.
+  const show = reduced || ready;
+  const fade = (delay: number) => ({
+    initial: { opacity: 0, y: 28 },
+    animate: show ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 },
+    transition: { duration: 0.9, ease: EASE_OUT, delay },
+  });
 
   return (
     <section
@@ -60,14 +65,13 @@ export function Hero() {
       <div className="container-fluid relative z-10 grid items-center gap-12 lg:grid-cols-12">
         {/* Left — copy */}
         <div className="lg:col-span-7">
-          <div
-            data-hero-fade
+          <motion.div
+            {...fade(0.05)}
             className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-fog backdrop-blur-xl"
-            style={reduced ? undefined : { opacity: 0 }}
           >
             <Sparkles className="size-3.5 text-volt" />
             Port Harcourt&apos;s #1 Fitness Destination
-          </div>
+          </motion.div>
 
           <h1
             ref={headlineRef}
@@ -76,23 +80,15 @@ export function Hero() {
           >
             Train like
             <br />
-            <span className="text-gradient">it matters</span>
+            <span className="text-volt">it matters</span>
           </h1>
 
-          <p
-            data-hero-fade
-            className="mt-7 max-w-xl text-body-lg text-fog"
-            style={reduced ? undefined : { opacity: 0 }}
-          >
+          <motion.p {...fade(0.15)} className="mt-7 max-w-xl text-body-lg text-fog">
             World-class equipment, elite coaching and luxury wellness — under one roof.
             This is where total transformation begins.
-          </p>
+          </motion.p>
 
-          <div
-            data-hero-fade
-            className="mt-9 flex flex-wrap items-center gap-3"
-            style={reduced ? undefined : { opacity: 0 }}
-          >
+          <motion.div {...fade(0.25)} className="mt-9 flex flex-wrap items-center gap-3">
             <Magnetic>
               <Button asChild size="lg" variant="primary" className="btn-glow">
                 <Link href="/membership">
@@ -105,13 +101,11 @@ export function Hero() {
                 <Play className="size-4" /> Take a Tour
               </Link>
             </Button>
-          </div>
+          </motion.div>
 
-          {/* Stat highlights */}
-          <dl
-            data-hero-fade
+          <motion.dl
+            {...fade(0.35)}
             className="mt-14 grid max-w-xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
-            style={reduced ? undefined : { opacity: 0 }}
           >
             {heroHighlights.map((h) => (
               <div key={h.label}>
@@ -119,17 +113,16 @@ export function Hero() {
                 <dd className="mt-1 text-xs uppercase tracking-wider text-smoke">{h.label}</dd>
               </div>
             ))}
-          </dl>
+          </motion.dl>
         </div>
 
         {/* Right — floating membership card */}
-        <div
-          data-hero-fade
+        <motion.div
+          {...fade(0.4)}
           className="hidden justify-self-end lg:col-span-5 lg:block"
-          style={reduced ? undefined : { opacity: 0 }}
         >
           <MembershipCard />
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll cue */}
@@ -161,7 +154,6 @@ function MembershipCard() {
             <p className="mt-1 font-display text-3xl tracking-wide text-white">Charlie&apos;s Elite</p>
           </div>
 
-          {/* chip */}
           <div className="mt-6 flex items-center gap-3">
             <div className="h-8 w-11 rounded-md bg-gradient-to-br from-volt to-electric opacity-90" />
             <div className="h-px flex-1 bg-white/10" />
@@ -180,7 +172,6 @@ function MembershipCard() {
         </div>
       </div>
 
-      {/* glow */}
       <div className="absolute -inset-6 -z-10 rounded-full bg-volt/20 blur-3xl" aria-hidden />
     </TiltCard>
   );
